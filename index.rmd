@@ -1,9 +1,7 @@
 ---
 title: "Syd Competitive Programming 2019_02_23"
 output:
-  md_document:
-    variant: markdown_github
-always_allow_html: yes
+  html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -26,7 +24,7 @@ df[, pts := 0]
 df[, pts := num_attendees - p1s + 1 + pts]
 
 summ = df[,.(github = paste(github), pts = sum(pts)), .(team)]
-summ[order(pts), rank:=1:.N]
+summ[order(pts, decreasing=T), rank:=1:.N]
 DT::datatable(summ)
 ```
 

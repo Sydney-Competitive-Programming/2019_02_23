@@ -20,11 +20,11 @@ You can also embed plots, for example:
 
 <!--html_preserve-->
 
-<script type="application/json" data-for="htmlwidget-de4df331785f9eb30e15">{"x":{"filter":"none","data":[["1"],["David Guan"],["NA"],[10],[1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>team<\/th>\n      <th>github<\/th>\n      <th>pts<\/th>\n      <th>rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-e3c43b19f85d795d4226">{"x":{"filter":"none","data":[["1"],["David Guan"],["NA"],[10],[1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>team<\/th>\n      <th>github<\/th>\n      <th>pts<\/th>\n      <th>rank<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <!--/html_preserve-->
 
 ``` r
 barplot(summ$pts, xlab = summ$team)
 ```
 
-![](READM_files/figure-markdown_github/plot-1.png)
+![](index_files/figure-markdown_github/plot-1.png)
