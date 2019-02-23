@@ -8,14 +8,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## The leaderboard
-
-```{r df}
+```{r df, include=FALSE}
 df = data.table::fread("data.csv")
 df
 ```
 
-##  Plots
+## The leaderboard
 
 You can also embed plots, for example:
 
@@ -27,6 +25,8 @@ summ = df[,.(github = paste(github), pts = sum(pts)), .(team)]
 summ[order(pts, decreasing=T), rank:=1:.N]
 DT::datatable(summ)
 ```
+
+# README
 
 ```{r plot, dependson = summ}
 barplot(summ$pts, xlab = summ$team)
