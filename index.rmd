@@ -4,27 +4,25 @@ output:
   html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, cache=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r df, include=FALSE}
-df = data.table::fread("data.csv")
-df
 ```
 
 ## The leaderboard
 
-You can also embed plots, for example:
 
-```{r summ, echo=FALSE, dependson=df}
+```{r summ, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df, paged.print=FALSE}
+df = data.table::fread("data.csv")
 df[, pts := 0]
+df[is.na(p1s), p1s := num_attendees+1]
+df[is.na(p2s), p2s := num_attendees+1]
+df[is.na(p3s), p3s := num_attendees+1]
 df[, pts := num_attendees - p1s + 1 + pts]
 df[, pts := num_attendees - p2s + 1 + pts]
 data.table::fwrite(df, "data_processed.csv")
 
 
-summ = df[,.(github = paste(github), pts = sum(pts)), .(team)]
+summ = df[,.(github = paste(github, collapse = " "), pts = sum(pts)), .(team)]
 summ[order(pts, decreasing=T), rank:=1:.N]
 data.table::fwrite(df, "data_processed_summ.csv")
 
@@ -33,6 +31,6 @@ DT::datatable(summ)
 
 # Plot
 
-```{r plot, dependson = summ}
+```{r plot, echo=FALSE, dependson=summ, cache=TRUE}
 barplot(summ$pts, xlab = summ$team)
 ```
