@@ -1,0 +1,50 @@
+---
+title: "Syd Competitive Programming 2019_02_23"
+output:
+  html_document
+---
+
+```{r setup, include=FALSE, cache=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The leaderboard
+
+
+```{r summ1, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df, paged.print=FALSE}
+library(data.table)
+df = data.table::fread("data.csv")
+df[, pts := 0L]
+df[, p1s_penalty := sum(!is.na(p1s))]
+df[, p2s_penalty := sum(!is.na(p2s))]
+df[, p3s_penalty := sum(!is.na(p3s))]
+
+df[is.na(p1s), p1s := num_attendees+1]
+df[is.na(p2s), p2s := num_attendees+1]
+df[is.na(p3s), p3s := num_attendees+1]
+
+df[p1s != num_attendees+1, pts := num_attendees - p1s + 1 + pts-p1s_penalty]
+df[p2s != num_attendees+1, pts := num_attendees - p2s + 1 + pts-p2s_penalty]
+df[p3s != num_attendees+1, pts := num_attendees - p3s + 1 + pts-p3s_penalty]
+data.table::fwrite(df, "data_processed.csv")
+
+library(magrittr)
+DT::datatable(df[, .(p1s_penalty, p2s_penalty, p3s_penalty)] %>% unique)
+```
+
+```{r summ, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df}
+library(data.table)
+summ = df[,.(github = paste(github, collapse = " "), pts = sum(pts)), .(team)]
+summ[order(pts, decreasing=T), rank:=1:.N]
+data.table::fwrite(df, "data_processed_summ.csv")
+
+DT::datatable(summ[order(pts, decreasing=T)])
+```
+
+# Points by rank
+
+```{r plot, echo=FALSE, dependson=summ, cache=FALSE}
+library(data.table)
+summ = summ[order(pts, decreasing = T)]
+barplot(summ$pts, names.arg = summ$team)
+```

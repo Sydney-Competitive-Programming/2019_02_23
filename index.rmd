@@ -1,5 +1,5 @@
 ---
-title: "Syd Competitive Programming 2019_02_23"
+title: "SCP 2019 02 23"
 output:
   html_document
 ---
@@ -8,45 +8,108 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## The leaderboard
+## Problem Penalties
 
 
 ```{r summ1, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df, paged.print=FALSE}
 library(data.table)
-df = data.table::fread("data.csv")
-df = data.table::fread("data.csv")
-library(data.table)
-df[, pts := 0L]
-df[, p1s_penalty := sum(!is.na(p1s))]
-df[, p2s_penalty := sum(!is.na(p2s))]
-df[, p3s_penalty := sum(!is.na(p3s))]
+add_entry <- function(df, users, prob_id, team = paste0(users, collapse=","),  bytes = NA,  github = "", valid = T) {
+  new_entry = data.table(users = paste0(users, collapse = ","), prob_id = prob_id, team = team, bytes = NA, github = "", valid = T)
+  
+  rbindlist(list(df, new_entry), use.names = T, fill = T)
+}
 
-df[is.na(p1s), p1s := num_attendees+1]
-df[is.na(p2s), p2s := num_attendees+1]
-df[is.na(p3s), p3s := num_attendees+1]
+attendees = data.table(
+  users = c("Andrew Morris", "Georgie Payne", "Yong Fei", "Rong Yiqun", "Yuchen Liu", "Michael Jones", "Daeseok Lee", "David Guan", "ZJ", "Si Pham", "James Anderson"),
+  handicap = 0
+)
 
-df[p1s != num_attendees+1, pts := num_attendees - p1s + 1 + pts-p1s_penalty]
-df[p2s != num_attendees+1, pts := num_attendees - p2s + 1 + pts-p2s_penalty]
-df[p3s != num_attendees+1, pts := num_attendees - p3s + 1 + pts-p3s_penalty]
+
+df = data.table()
+df = add_entry(df, "David Guan", 1)
+df = add_entry(df, "ZJ", 2, github = "xiaodaigh")
+df = add_entry(df, "David Guan", 2)
+df = add_entry(df, "Michael Jones", 2, github = "Dhoke")
+df = add_entry(df, "Daeseok Lee", 1)
+df = add_entry(df, "Yuchen Liu", 1)
+df = add_entry(df, "Andrew Morris", 3)
+
+# calculate penalties
+df[,penalties_for_difficulty := .N, prob_id]
+df[,nattendees := nrow(attendees)]
+df[,timeid := 1:.N]
+df[order(timeid), pts := 2*nattendees-(1:.N) + 1 - penalties_for_difficulty,prob_id]
+
+# write the data out
 data.table::fwrite(df, "data_processed.csv")
 
+summ = df[,.(pts = sum(pts)), .(team, users)]
+summ = summ[order(pts, decreasing = T), rank:=1:.N]
+setkey(summ, rank)
+summ = merge(summ, attendees, by = "users", all.x = T)
+
+
 library(magrittr)
-DT::datatable(df[, .(p1s_penalty, p2s_penalty, p3s_penalty)] %>% unique)
+DT::datatable(df[,.(penalties_for_difficulty = .N), prob_id], filter="none", options = list(searching=F, paging=F))
 ```
+
+## Leaderboard
 
 ```{r summ, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df}
 library(data.table)
-summ = df[,.(github = paste(github, collapse = " "), pts = sum(pts)), .(team)]
-summ[order(pts, decreasing=T), rank:=1:.N]
-data.table::fwrite(df, "data_processed_summ.csv")
-
-DT::datatable(summ[order(pts, decreasing=T)])
+DT::datatable(summ[order(pts, decreasing=T),.(team, rank, pts, users)])
 ```
 
-# Points by rank
 
 ```{r plot, echo=FALSE, dependson=summ, cache=FALSE}
 library(data.table)
 summ = summ[order(pts, decreasing = T)]
-barplot(summ$pts, names.arg = summ$team)
+barplot(summ$pts, names.arg = summ$team, cex.names = 0.80, main ="Pts & Rank")
+```
+
+## Handicap Leaderboard
+
+```{r summ_h, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=summ}
+library(data.table)
+summ[,pts_h := pts + handicap]
+summ[order(pts_h, decreasing = T),rank_h := 1:.N]
+setkey(summ, rank_h)
+DT::datatable(summ[,.(team, rank_h, pts_h, handicap, users)])
+```
+
+
+```{r plot_h, echo=FALSE, cache=FALSE, dependson=summ}
+library(data.table)
+barplot(summ$pts_h, names.arg = summ$team, cex.names = 0.80, main = "Handicap Pts & Rank")
+```
+
+## New Handicap calculation
+```{r hanidcaps, echo=FALSE}
+
+su = summ[,.(users = split(users,",") %>% unlist), team]
+
+
+summ1 = merge(summ[,-"users", with = F], su, by = "team") %>% 
+  merge(attendees, by = "users", all = T)
+
+summ1[is.na(pts), pts := 0]
+summ1[,handicap := 0]
+
+summ2 = summ1[order(pts, decreasing = T),]
+
+init = summ2[,mean(pts) - pts]
+
+res = optim(init , function(x) {
+  summ2[,additional_handicap := c(x)]
+  var(summ2[,pts + handicap + additional_handicap])
+})
+
+summ2[,additional_handicap := res$par]
+summ2[,pts_h := round(pts + handicap + additional_handicap,0)]
+DT::datatable(summ2[order(pts_h, decreasing = T),.(users, pts_h, pts, existing_handicap=handicap, new_handicap = round(handicap+additional_handicap,0))])
+```
+
+## Raw data
+```{r echo=FALSE, dependson=df}
+DT::datatable(df)
 ```

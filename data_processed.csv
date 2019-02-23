@@ -1,8 +1,8 @@
-username,github,team,p1s,p2s,p3s,p1g,p2g,p3g,p1e,p2e,p3e,np,num_attendees,pts,p1s_penalty,p2s_penalty,p3s_penalty
-David Guan,"",David Guan,1,11,11,,,,,,,,10,7,3,3,1
-ZJ,xiaodaigh,xiaodaigh,11,2,11,,,,,,,,10,6,3,3,1
-David Guan,"",David Guan,11,1,11,,,,,,,,10,7,3,3,1
-Mike Jones,Dhoke,Mike Jones,11,3,11,,,,,,,,10,5,3,3,1
-Daeseok Lee,"",Daeseok Lee,2,11,11,,,,,,,,10,6,3,3,1
-Yuchen,"",Yuchen,3,11,11,,,,,,,,10,5,3,3,1
-Andrew,"",Andrew,11,11,1,,,,,,,,10,9,3,3,1
+users,prob_id,team,bytes,github,valid,penalties_for_difficulty,nattendees,timeid,pts
+David Guan,1,David Guan,,"",TRUE,3,11,1,19
+ZJ,2,ZJ,,"",TRUE,3,11,2,19
+David Guan,2,David Guan,,"",TRUE,3,11,3,18
+Michael Jones,2,Michael Jones,,"",TRUE,3,11,4,17
+Daeseok Lee,1,Daeseok Lee,,"",TRUE,3,11,5,18
+Yuchen Liu,1,Yuchen Liu,,"",TRUE,3,11,6,17
+Andrew Morris,3,Andrew Morris,,"",TRUE,1,11,7,21
