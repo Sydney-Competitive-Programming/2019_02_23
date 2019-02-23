@@ -32,5 +32,5 @@ DT::datatable(summ)
 # Plot
 
 ```{r plot, echo=FALSE, dependson=summ, cache=TRUE}
-barplot(summ$pts, xlab = summ$team)
+barplot(summ$pts, names.arg = summ$team)
 ```
