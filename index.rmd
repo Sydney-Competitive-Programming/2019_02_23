@@ -106,7 +106,7 @@ res = optim(init , function(x) {
 
 summ2[,additional_handicap := res$par]
 summ2[,pts_h := round(pts + handicap + additional_handicap,0)]
-DT::datatable(summ2[order(pts_h, decreasing = T),.(users, pts_h, pts, existing_handicap=handicap, new_handicap = round(handicap+additional_handicap,0))])
+DT::datatable(summ2[order(pts_h, decreasing = T),.(users, pts_h, pts, existing_handicap=handicap, new_handicap = round((handicap+additional_handicap)/nrow(attendees),2))])
 ```
 
 ## Raw data
