@@ -1,0 +1,32 @@
+---
+title: "Syd Competitive Programming 2019_02_23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The leaderboard
+
+```{r df}
+df = data.table::fread("data.csv")
+df
+```
+
+##  Plots
+
+You can also embed plots, for example:
+
+```{r summ, echo=FALSE, dependson=df}
+df[, pts := 0]
+df[, pts := num_attendees - p1s + 1 + pts]
+
+summ = df[,.(github = paste(github), pts = sum(pts)), .(team)]
+summ[order(pts), rank:=1:.N]
+DT::datatable(summ)
+```
+
+```{r plot, dependson = summ}
+barplot(summ$pts, xlab = summ$team)
+```
