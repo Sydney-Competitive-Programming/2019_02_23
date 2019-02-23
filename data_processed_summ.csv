@@ -1,7 +1,8 @@
-username,github,team,pts,p1s,p2s,p3s,p1g,p2g,p3g,p1e,p2e,p3e,np,num_attendees,p1s_penalty,p2s_penalty
-David Guan,"",David Guan,4,1,11,TRUE,,,,,,,,10,3,3
-ZJ,xiaodaigh,xiaodaigh,4,11,1,TRUE,,,,,,,,10,3,3
-"","",David Guan,3,11,2,TRUE,,,,,,,,10,3,3
-Mike Jones,Dhoke,Mike Jones,2,11,3,TRUE,,,,,,,,10,3,3
-Daeseok Lee,"",Daeseok Lee,3,2,11,TRUE,,,,,,,,10,3,3
-Yuchen,"",Yuchen,2,3,11,TRUE,,,,,,,,10,3,3
+username,github,team,p1s,p2s,p3s,p1g,p2g,p3g,p1e,p2e,p3e,np,num_attendees,pts,p1s_penalty,p2s_penalty,p3s_penalty
+David Guan,"",David Guan,1,11,11,,,,,,,,10,7,3,3,1
+ZJ,xiaodaigh,xiaodaigh,11,2,11,,,,,,,,10,6,3,3,1
+David Guan,"",David Guan,11,1,11,,,,,,,,10,7,3,3,1
+Mike Jones,Dhoke,Mike Jones,11,3,11,,,,,,,,10,5,3,3,1
+Daeseok Lee,"",Daeseok Lee,2,11,11,,,,,,,,10,6,3,3,1
+Yuchen,"",Yuchen,3,11,11,,,,,,,,10,5,3,3,1
+Andrew,"",Andrew,11,11,1,,,,,,,,10,9,3,3,1
