@@ -14,11 +14,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r summ, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE, dependson=df, paged.print=FALSE}
 df = data.table::fread("data.csv")
 df[, pts := 0]
+df[, p1s_penalty := sum(!is.na(p1s))]
+df[, p2s_penalty := sum(!is.na(p2s))]
+
 df[is.na(p1s), p1s := num_attendees+1]
 df[is.na(p2s), p2s := num_attendees+1]
 df[is.na(p3s), p3s := num_attendees+1]
-df[, pts := num_attendees - p1s + 1 + pts]
-df[, pts := num_attendees - p2s + 1 + pts]
+df[, pts := num_attendees - p1s + 1 + pts-p1s_penalty]
+df[, pts := num_attendees - p2s + 1 + pts-p2s_penalty]
 data.table::fwrite(df, "data_processed.csv")
 
 
@@ -29,8 +32,10 @@ data.table::fwrite(df, "data_processed_summ.csv")
 DT::datatable(summ)
 ```
 
-# Plot
+# Points by rank
 
-```{r plot, echo=FALSE, dependson=summ, cache=TRUE}
+```{r plot, echo=FALSE, dependson=summ, cache=FALSE}
+library(data.table)
+summ = summ[order(pts, decreasing = T)]
 barplot(summ$pts, names.arg = summ$team)
 ```

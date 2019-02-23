@@ -1,5 +1,7 @@
-username,github,team,pts,p1s,p2s,p3s,p1g,p2g,p3g,p1e,p2e,p3e,np,num_attendees
-David Guan,"",David Guan,10,1,11,TRUE,,,,,,,,10
-ZJ,xiaodaigh,xiaodaigh,10,11,1,TRUE,,,,,,,,10
-"","",David Guan,9,11,2,TRUE,,,,,,,,10
-Mike Jones,"",Mike Jones,8,11,3,TRUE,,,,,,,,10
+username,github,team,pts,p1s,p2s,p3s,p1g,p2g,p3g,p1e,p2e,p3e,np,num_attendees,p1s_penalty,p2s_penalty
+David Guan,"",David Guan,4,1,11,TRUE,,,,,,,,10,3,3
+ZJ,xiaodaigh,xiaodaigh,4,11,1,TRUE,,,,,,,,10,3,3
+"","",David Guan,3,11,2,TRUE,,,,,,,,10,3,3
+Mike Jones,Dhoke,Mike Jones,2,11,3,TRUE,,,,,,,,10,3,3
+Daeseok Lee,"",Daeseok Lee,3,2,11,TRUE,,,,,,,,10,3,3
+Yuchen,"",Yuchen,2,3,11,TRUE,,,,,,,,10,3,3
