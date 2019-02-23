@@ -20,13 +20,17 @@ You can also embed plots, for example:
 ```{r summ, echo=FALSE, dependson=df}
 df[, pts := 0]
 df[, pts := num_attendees - p1s + 1 + pts]
+data.table::fwrite(df, "data_processed.csv")
+
 
 summ = df[,.(github = paste(github), pts = sum(pts)), .(team)]
 summ[order(pts, decreasing=T), rank:=1:.N]
+data.table::fwrite(df, "data_processed_summ.csv")
+
 DT::datatable(summ)
 ```
 
-# README
+# Plot
 
 ```{r plot, dependson = summ}
 barplot(summ$pts, xlab = summ$team)
