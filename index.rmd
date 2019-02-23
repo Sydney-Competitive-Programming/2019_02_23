@@ -64,7 +64,7 @@ DT::datatable(summ[order(pts, decreasing=T),.(team, rank, pts, users)])
 ```{r plot, echo=FALSE, dependson=summ, cache=FALSE}
 library(data.table)
 summ = summ[order(pts, decreasing = T)]
-barplot(summ$pts, names.arg = summ$team, cex.names = 0.80, main ="Pts & Rank")
+barplot(summ$pts, names.arg = summ$team, cex.names = 0.70, main ="Pts & Rank")
 ```
 
 ## Handicap Leaderboard
@@ -80,7 +80,7 @@ DT::datatable(summ[,.(team, rank_h, pts_h, handicap, users)])
 
 ```{r plot_h, echo=FALSE, cache=FALSE, dependson=summ}
 library(data.table)
-barplot(summ$pts_h, names.arg = summ$team, cex.names = 0.80, main = "Handicap Pts & Rank")
+barplot(summ$pts_h, names.arg = summ$team, cex.names = 0.70, main = "Handicap Pts & Rank")
 ```
 
 ## New Handicap calculation
