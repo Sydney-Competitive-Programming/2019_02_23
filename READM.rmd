@@ -1,6 +1,9 @@
 ---
 title: "Syd Competitive Programming 2019_02_23"
-output: html_document
+output:
+  md_document:
+    variant: markdown_github
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
