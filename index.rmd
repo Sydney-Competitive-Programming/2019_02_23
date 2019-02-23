@@ -20,6 +20,7 @@ You can also embed plots, for example:
 ```{r summ, echo=FALSE, dependson=df}
 df[, pts := 0]
 df[, pts := num_attendees - p1s + 1 + pts]
+df[, pts := num_attendees - p2s + 1 + pts]
 data.table::fwrite(df, "data_processed.csv")
 
 
