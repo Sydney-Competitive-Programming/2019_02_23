@@ -87,6 +87,8 @@ barplot(summ$pts, names.arg = summ$team, cex.names = 0.70, main ="Pts & Rank")
 
 
 ## New Handicap calculation
+The `new_handicap` is quotient. The number of points added is `new_handicap* number_of_attendees`.
+
 ```{r hanidcaps, echo=FALSE}
 
 su = summ[,.(users = split(users,",") %>% unlist), team]
