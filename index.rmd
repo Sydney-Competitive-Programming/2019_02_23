@@ -74,7 +74,7 @@ DT::datatable(summ[,.(team, rank_h, pts_h, handicap, users)])
 
 ```{r plot_h, echo=FALSE, cache=FALSE, dependson=summ}
 library(data.table)
-barplot(summ$pts_h, names.arg = summ$team, cex.names = 0.70, main = "Handicap Pts & Rank")
+#barplot(summ$pts_h, names.arg = summ$team, cex.names = 0.70, main = "Handicap Pts & Rank")
 ```
 
 
@@ -90,7 +90,7 @@ barplot(summ$pts, names.arg = summ$team, cex.names = 0.70, main ="Pts & Rank")
 The `new_handicap` is quotient. The number of points added is `new_handicap* number_of_attendees`.
 
 ```{r hanidcaps, echo=FALSE}
-
+library(magrittr)
 su = summ[,.(users = split(users,",") %>% unlist), team]
 
 
@@ -118,3 +118,6 @@ DT::datatable(summ2[order(pts_h, decreasing = T),.(users, pts_h, pts, existing_h
 ```{r echo=FALSE, dependson=df}
 DT::datatable(df)
 ```
+
+## Scoring System Explained
+
